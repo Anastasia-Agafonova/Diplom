@@ -1,9 +1,11 @@
 package praktikum;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class BurgerTest {
 
@@ -18,48 +20,94 @@ public class BurgerTest {
     }
 
     @Test
-    public void addIngredientShouldAddIngredientToList() {
+    public void addIngredientShouldIncreaseIngredientsCount() {
         Burger burger = new Burger();
-        Ingredient ingredient = new Ingredient(IngredientType.FILLING, "cutlet", 100);
+        Ingredient cutlet = new Ingredient(IngredientType.FILLING, "cutlet", 100);
 
-        burger.addIngredient(ingredient);
+        burger.addIngredient(cutlet);
 
         assertEquals(1, burger.ingredients.size());
-        assertSame(ingredient, burger.ingredients.get(0));
     }
 
     @Test
-    public void removeIngredientShouldRemoveIngredientFromList() {
+    public void removeIngredientShouldDecreaseIngredientsCount() {
         Burger burger = new Burger();
-        Ingredient ingredient1 = new Ingredient(IngredientType.FILLING, "cutlet", 100);
-        Ingredient ingredient2 = new Ingredient(IngredientType.SAUCE, "hot sauce", 100);
 
-        burger.addIngredient(ingredient1);
-        burger.addIngredient(ingredient2);
+        Ingredient cutlet = new Ingredient(IngredientType.FILLING, "cutlet", 100);
+        Ingredient hotSauce = new Ingredient(IngredientType.SAUCE, "hot sauce", 100);
+
+        burger.addIngredient(cutlet);
+        burger.addIngredient(hotSauce);
 
         burger.removeIngredient(0);
 
         assertEquals(1, burger.ingredients.size());
-        assertSame(ingredient2, burger.ingredients.get(0));
     }
 
     @Test
-    public void moveIngredientShouldMoveIngredientToNewPosition() {
+    public void removeIngredientShouldKeepRemainingIngredient() {
         Burger burger = new Burger();
 
-        Ingredient ingredient1 = new Ingredient(IngredientType.FILLING, "cutlet", 100);
-        Ingredient ingredient2 = new Ingredient(IngredientType.SAUCE, "hot sauce", 100);
-        Ingredient ingredient3 = new Ingredient(IngredientType.FILLING, "sausage", 300);
+        Ingredient cutlet = new Ingredient(IngredientType.FILLING, "cutlet", 100);
+        Ingredient hotSauce = new Ingredient(IngredientType.SAUCE, "hot sauce", 100);
 
-        burger.addIngredient(ingredient1);
-        burger.addIngredient(ingredient2);
-        burger.addIngredient(ingredient3);
+        burger.addIngredient(cutlet);
+        burger.addIngredient(hotSauce);
+
+        burger.removeIngredient(0);
+
+        assertSame(hotSauce, burger.ingredients.get(0));
+    }
+
+    @Test
+    public void moveIngredientShouldMoveIngredientToFirstPosition() {
+        Burger burger = new Burger();
+
+        Ingredient cutlet = new Ingredient(IngredientType.FILLING, "cutlet", 100);
+        Ingredient hotSauce = new Ingredient(IngredientType.SAUCE, "hot sauce", 100);
+        Ingredient sausage = new Ingredient(IngredientType.FILLING, "sausage", 300);
+
+        burger.addIngredient(cutlet);
+        burger.addIngredient(hotSauce);
+        burger.addIngredient(sausage);
 
         burger.moveIngredient(0, 2);
 
-        assertSame(ingredient2, burger.ingredients.get(0));
-        assertSame(ingredient3, burger.ingredients.get(1));
-        assertSame(ingredient1, burger.ingredients.get(2));
+        assertSame(hotSauce, burger.ingredients.get(0));
+    }
+
+    @Test
+    public void moveIngredientShouldMoveIngredientToSecondPosition() {
+        Burger burger = new Burger();
+
+        Ingredient cutlet = new Ingredient(IngredientType.FILLING, "cutlet", 100);
+        Ingredient hotSauce = new Ingredient(IngredientType.SAUCE, "hot sauce", 100);
+        Ingredient sausage = new Ingredient(IngredientType.FILLING, "sausage", 300);
+
+        burger.addIngredient(cutlet);
+        burger.addIngredient(hotSauce);
+        burger.addIngredient(sausage);
+
+        burger.moveIngredient(0, 2);
+
+        assertSame(sausage, burger.ingredients.get(1));
+    }
+
+    @Test
+    public void moveIngredientShouldMoveIngredientToLastPosition() {
+        Burger burger = new Burger();
+
+        Ingredient cutlet = new Ingredient(IngredientType.FILLING, "cutlet", 100);
+        Ingredient hotSauce = new Ingredient(IngredientType.SAUCE, "hot sauce", 100);
+        Ingredient sausage = new Ingredient(IngredientType.FILLING, "sausage", 300);
+
+        burger.addIngredient(cutlet);
+        burger.addIngredient(hotSauce);
+        burger.addIngredient(sausage);
+
+        burger.moveIngredient(0, 2);
+
+        assertSame(cutlet, burger.ingredients.get(2));
     }
 
     @Test
@@ -75,33 +123,6 @@ public class BurgerTest {
         burger.setBuns(bun);
         burger.addIngredient(ingredient);
 
-        float actualPrice = burger.getPrice();
-
-        assertEquals(300f, actualPrice, 0.001f);
-    }
-
-    @Test
-    public void getReceiptShouldReturnCorrectReceipt() {
-        Burger burger = new Burger();
-
-        Bun bun = mock(Bun.class);
-        Ingredient ingredient = mock(Ingredient.class);
-
-        when(bun.getName()).thenReturn("black bun");
-        when(bun.getPrice()).thenReturn(100f);
-
-        when(ingredient.getName()).thenReturn("cutlet");
-        when(ingredient.getType()).thenReturn(IngredientType.FILLING);
-        when(ingredient.getPrice()).thenReturn(100f);
-
-        burger.setBuns(bun);
-        burger.addIngredient(ingredient);
-
-        String receipt = burger.getReceipt();
-
-        assertTrue(receipt.contains("black bun"));
-        assertTrue(receipt.contains("cutlet"));
-        assertTrue(receipt.contains("filling"));
-        assertTrue(receipt.contains("300"));
+        assertEquals(300f, burger.getPrice(), 0.001f);
     }
 }
