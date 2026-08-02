@@ -12,17 +12,17 @@ public class BurgerTest {
     @Test
     public void setBunsShouldSetBun() {
         Burger burger = new Burger();
-        Bun bun = new Bun("black bun", 100);
+        Bun bun = mock(Bun.class);
 
         burger.setBuns(bun);
 
-        assertEquals(bun, burger.bun);
+        assertSame(bun, burger.bun);
     }
 
     @Test
     public void addIngredientShouldIncreaseIngredientsCount() {
         Burger burger = new Burger();
-        Ingredient cutlet = new Ingredient(IngredientType.FILLING, "cutlet", 100);
+        Ingredient cutlet = mock(Ingredient.class);
 
         burger.addIngredient(cutlet);
 
@@ -33,8 +33,8 @@ public class BurgerTest {
     public void removeIngredientShouldDecreaseIngredientsCount() {
         Burger burger = new Burger();
 
-        Ingredient cutlet = new Ingredient(IngredientType.FILLING, "cutlet", 100);
-        Ingredient hotSauce = new Ingredient(IngredientType.SAUCE, "hot sauce", 100);
+        Ingredient cutlet = mock(Ingredient.class);
+        Ingredient hotSauce = mock(Ingredient.class);
 
         burger.addIngredient(cutlet);
         burger.addIngredient(hotSauce);
@@ -48,8 +48,8 @@ public class BurgerTest {
     public void removeIngredientShouldKeepRemainingIngredient() {
         Burger burger = new Burger();
 
-        Ingredient cutlet = new Ingredient(IngredientType.FILLING, "cutlet", 100);
-        Ingredient hotSauce = new Ingredient(IngredientType.SAUCE, "hot sauce", 100);
+        Ingredient cutlet = mock(Ingredient.class);
+        Ingredient hotSauce = mock(Ingredient.class);
 
         burger.addIngredient(cutlet);
         burger.addIngredient(hotSauce);
@@ -63,9 +63,9 @@ public class BurgerTest {
     public void moveIngredientShouldMoveIngredientToFirstPosition() {
         Burger burger = new Burger();
 
-        Ingredient cutlet = new Ingredient(IngredientType.FILLING, "cutlet", 100);
-        Ingredient hotSauce = new Ingredient(IngredientType.SAUCE, "hot sauce", 100);
-        Ingredient sausage = new Ingredient(IngredientType.FILLING, "sausage", 300);
+        Ingredient cutlet = mock(Ingredient.class);
+        Ingredient hotSauce = mock(Ingredient.class);
+        Ingredient sausage = mock(Ingredient.class);
 
         burger.addIngredient(cutlet);
         burger.addIngredient(hotSauce);
@@ -80,9 +80,9 @@ public class BurgerTest {
     public void moveIngredientShouldMoveIngredientToSecondPosition() {
         Burger burger = new Burger();
 
-        Ingredient cutlet = new Ingredient(IngredientType.FILLING, "cutlet", 100);
-        Ingredient hotSauce = new Ingredient(IngredientType.SAUCE, "hot sauce", 100);
-        Ingredient sausage = new Ingredient(IngredientType.FILLING, "sausage", 300);
+        Ingredient cutlet = mock(Ingredient.class);
+        Ingredient hotSauce = mock(Ingredient.class);
+        Ingredient sausage = mock(Ingredient.class);
 
         burger.addIngredient(cutlet);
         burger.addIngredient(hotSauce);
@@ -97,9 +97,9 @@ public class BurgerTest {
     public void moveIngredientShouldMoveIngredientToLastPosition() {
         Burger burger = new Burger();
 
-        Ingredient cutlet = new Ingredient(IngredientType.FILLING, "cutlet", 100);
-        Ingredient hotSauce = new Ingredient(IngredientType.SAUCE, "hot sauce", 100);
-        Ingredient sausage = new Ingredient(IngredientType.FILLING, "sausage", 300);
+        Ingredient cutlet = mock(Ingredient.class);
+        Ingredient hotSauce = mock(Ingredient.class);
+        Ingredient sausage = mock(Ingredient.class);
 
         burger.addIngredient(cutlet);
         burger.addIngredient(hotSauce);
